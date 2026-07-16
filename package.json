@@ -12,6 +12,15 @@
     "freelens": "^1.8.0"
   },
   "license": "MIT",
+  "author": "Avap Co., Ltd.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.avaper.day/avap/freelens-plugins/freelens-cluster-sidebar.git"
+  },
+  "homepage": "https://github.com/AvapCoLtd/freelens-cluster-sidebar#readme",
+  "bugs": {
+    "url": "https://github.com/AvapCoLtd/freelens-cluster-sidebar/issues"
+  },
   "scripts": {
     "type:check": "tsc --noEmit -p tsconfig.json --composite false",
     "prebuild": "pnpm type:check",
