@@ -48,7 +48,7 @@ const ClusterSidebarContent = observer(function ClusterSidebarContent() {
 
   return (
     <nav
-      aria-label="クラスタ一覧"
+      aria-label="Cluster List"
       onMouseEnter={() => setExpanded(true)}
       onMouseLeave={() => setExpanded(false)}
       style={{
@@ -79,7 +79,7 @@ const ClusterSidebarContent = observer(function ClusterSidebarContent() {
               borderBottom: "1px solid var(--borderColor, #3f4041)",
             }}
           >
-            クラスタ
+            Clusters
           </div>
           <div style={{ flex: 1, overflowY: "auto" }}>
             {clusters.length === 0 ? (
@@ -90,7 +90,7 @@ const ClusterSidebarContent = observer(function ClusterSidebarContent() {
                   color: "var(--textColorSecondary, #9aa0a6)",
                 }}
               >
-                登録済みのクラスタがありません
+                No clusters registered
               </div>
             ) : (
               clusters.map((cluster) => <ClusterRow key={cluster.id} cluster={cluster} />)
