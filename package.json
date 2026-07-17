@@ -1,6 +1,6 @@
 {
   "name": "freelens-cluster-sidebar",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "FreeLens extension that shows all catalog clusters by full name in a hover-expanding sidebar over the Hotbar",
   "main": "out/main/index.js",
   "renderer": "out/renderer/index.js",
