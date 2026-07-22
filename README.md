@@ -2,7 +2,12 @@
 
 # freelens-cluster-sidebar
 
+![License](https://img.shields.io/github/license/AvapCoLtd/freelens-cluster-sidebar)
+![Release](https://img.shields.io/github/v/release/AvapCoLtd/freelens-cluster-sidebar)
+
 Hotbar の略称表示を補完する、Catalog登録済み全クラスタのフルネーム常時表示パネル。
+
+![Hotbarにホバーするとパネルが展開し、全クラスタがフルネームで一覧表示される](docs/images/hotbar-panel.gif)
 
 FreeLens の Hotbar（左端の縦アイコン列）はクラスタ名を2〜3文字の略称でしか表示できない。
 クラスタを多数登録している環境では略称だけで対象クラスタを判別できず、誤操作につながる。

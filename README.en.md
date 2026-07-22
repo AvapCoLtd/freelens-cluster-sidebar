@@ -1,6 +1,11 @@
 # freelens-cluster-sidebar
 
+![License](https://img.shields.io/github/license/AvapCoLtd/freelens-cluster-sidebar)
+![Release](https://img.shields.io/github/v/release/AvapCoLtd/freelens-cluster-sidebar)
+
 An always-on cluster full-name panel for FreeLens' Hotbar.
+
+![Hovering the Hotbar expands a panel listing every cluster by its full name](docs/images/hotbar-panel.gif)
 
 [日本語](README.md)
 
