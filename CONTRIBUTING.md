@@ -29,19 +29,11 @@ make pack     # .tgz へパック
 make clean    # node_modules/out/*.tgz/.pnpm-store を削除
 ```
 
-### 初回デプロイの注意
+### 初回セットアップ
 
-新規追加した拡張機能の**初回** `make deploy` は、FreeLens起動中に実行する必要がある。
+新しい環境でこのリポジトリを開発する場合、`make deploy` の前に一度、[README](README.md#インストール) の手順(`.tgz` をFreeLensのExtensions画面へドラッグ&ドロップ)で拡張機能をインストールしておくこと。まだリリースされていない変更を試したいだけなら、`make pack` でローカルビルドした `.tgz` でも構わない。
 
-FreeLensの拡張機能ディスカバリーは `~/.freelens/extensions/` をfile watcher(chokidar, `ignoreInitial: true`)で監視しており、起動前から存在するディレクトリの追加は検知しない。起動時の初期スキャンもリンク生成処理を伴わないため、次回起動でも自動修復されない(OSを問わないFreeLens自体の設計)。
-
-検知漏れのままだと `node_modules/freelens-cluster-sidebar` へのリンク(`pnpm install` によるsymlink。Windows環境でDeveloper Modeが無効な場合はJunction)が作られず、有効化しても `Cannot find module ...\out\renderer\index.js` としてログに記録されるだけでこの拡張機能のみロードに失敗する(FreeLens自体は起動する)。
-
-この直接配置によるデプロイは公式ドキュメント化された正規のインストール手順ではない(公式は `.tgz` をExtensions画面からパス指定/drag&dropする方式を案内している)。`make deploy` 一発で反復ビルド・デプロイを回すための非公式なショートカットであり、この制約はその副作用。
-
-以降の更新(`out/` の中身のみ差し替え)はリンクが既に存在するため影響を受けない。
-
-(WSL2からWindows側FreeLensへデプロイする場合、`.freelens/extensions/` への書き込みがWSL↔Windowsのファイルシステム境界を越えるため、起動中でもfile watcherイベントが確実に届くかは未検証。反映されない場合はFreeLensの再起動で切り分けること)
+`make deploy` は既にインストール済みの拡張機能を更新する用途のみを想定しており、一度もインストールしていない状態で実行すると反映されないことがある。
 
 ## リリース手順
 

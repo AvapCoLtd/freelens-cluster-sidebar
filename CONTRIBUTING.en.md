@@ -29,19 +29,11 @@ make pack     # pack into a .tgz
 make clean    # remove node_modules/out/*.tgz/.pnpm-store
 ```
 
-### First-time deploy caveat
+### First-time setup
 
-The **first** `make deploy` of a newly added extension must be run while FreeLens is running.
+Before using `make deploy` on a new environment, install the extension once via the [README](README.en.md#install) steps (drag the `.tgz` onto the Extensions screen in FreeLens). A `.tgz` from `make pack` works too if you just want to try unreleased changes.
 
-FreeLens's extension discovery watches `~/.freelens/extensions/` with a file watcher (chokidar, `ignoreInitial: true`) and doesn't detect directories that already existed before the watcher started. The startup scan doesn't trigger link creation either, so a later restart won't fix it — this is FreeLens's own design, independent of OS.
-
-Without detection, no link is created at `node_modules/freelens-cluster-sidebar` (a symlink via `pnpm install`; a Junction on Windows when Developer Mode is off). Enabling the extension then just logs `Cannot find module ...\out\renderer\index.js` and fails to load — FreeLens itself still starts fine.
-
-This direct-placement flow isn't the officially documented install path (the official one is dropping a `.tgz` onto the Extensions screen). It's an unofficial shortcut that lets `make deploy` drive the whole build-and-deploy loop from one command, and this caveat is a side effect of that.
-
-Subsequent updates (which only replace the contents of `out/`) are unaffected, since the link already exists.
-
-(When deploying from WSL2 to a Windows-side FreeLens, writes to `.freelens/extensions/` cross the WSL↔Windows filesystem boundary, and whether the file watcher event reliably arrives even while FreeLens is running hasn't been verified. If a deploy doesn't show up, try restarting FreeLens to narrow it down.)
+`make deploy` only updates an already-installed extension; running it before the extension has ever been installed may not take effect.
 
 ## Release process
 
