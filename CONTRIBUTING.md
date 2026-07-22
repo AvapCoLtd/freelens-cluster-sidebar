@@ -1,49 +1,58 @@
+[English](CONTRIBUTING.en.md)
+
 # Contributing
 
-## Environment setup
+## 環境構築
 
-`make build` / `make deploy` etc. run fully inside a Docker container; the host only needs Docker and `jq`.
+`make build` / `make deploy` 等はすべて Docker コンテナ内で完結する。ホストに必要なのは Docker と `jq` のみ。
 
-Paths that differ per contributor, such as the local FreeLens extensions directory, go in a `.env` file at the repo root (gitignored).
+コントリビューターごとに異なるパス(ローカルの FreeLens 拡張機能ディレクトリ等)は、リポジトリルートの `.env` ファイル(gitignore対象)に置く。
 
 ```sh
-# Deploy target for `make deploy` (the FreeLens extensions directory).
-# Without this, `make deploy` stops with an error.
-# Example (operating a native Windows FreeLens from WSL):
+# `make deploy` のデプロイ先(FreeLens拡張機能ディレクトリ)。
+# 未設定だと `make deploy` はエラーで停止する。
+# 例(WSLからネイティブWindows版FreeLensを操作する場合):
 #   /mnt/c/Users/<user>/.freelens/extensions
 FREELENS_EXT_DIR=
 ```
 
-Values can also be overridden per invocation with `make <target> VAR=value`.
+`make <target> VAR=value` で実行時に個別上書きも可能。
 
-## Build & deploy
+## ビルド・デプロイ
 
 ```sh
-make build    # install dependencies + build
-make deploy   # build + deploy to FREELENS_EXT_DIR
+make build    # 依存関係インストール + ビルド
+make deploy   # ビルド + FREELENS_EXT_DIR へデプロイ
 make lint     # Biome lint
 make fmt      # Biome format (--write)
-make pack     # pack into a .tgz
-make clean    # remove node_modules/out/*.tgz/.pnpm-store
+make pack     # .tgz へパック
+make clean    # node_modules/out/*.tgz/.pnpm-store を削除
 ```
 
-### First-time deploy caveat (Windows/WSL)
+### 初回デプロイの注意
 
-The **first** `make deploy` of a newly added extension must be run while FreeLens is running.
-If FreeLens is not running while a new extension directory is added under `.freelens/extensions/`, the file watcher does not pick up the change, no Junction is created for `AppData\Roaming\Freelens\node_modules\freelens-cluster-sidebar`, and `lens-extensions.json` ends up with `enabled: true` but no working module — FreeLens then fails to start it with `Cannot find module ...\out\renderer\index.js`.
-Subsequent updates (which only replace the contents of `out/`) are unaffected, since the Junction already exists.
+新規追加した拡張機能の**初回** `make deploy` は、FreeLens起動中に実行する必要がある。
 
-## Release process
+FreeLensの拡張機能ディスカバリーは `~/.freelens/extensions/` をfile watcher(chokidar, `ignoreInitial: true`)で監視しており、起動前から存在するディレクトリの追加は検知しない。起動時の初期スキャンもリンク生成処理を伴わないため、次回起動でも自動修復されない(OSを問わないFreeLens自体の設計)。
 
-1. Bump `version` in `package.json` to the value you want to release, and commit it
-2. Run `make tag`.
-   It creates and pushes the tag `vX.Y.Z` from the version in `package.json` (it refuses to run if that tag already exists)
-3. GitLab CI picks up the tag and runs the following.
-   - Builds and packs the extension into a `.tgz` (`make pack`) inside Docker
-   - Uploads the `.tgz` and its `.sha256` to the GitLab Generic Package Registry
-   - Creates a GitLab Release with those files attached
-   - Mirrors the repository to GitHub
-   - Creates a GitHub Release with the `.tgz` and `.sha256` attached
+検知漏れのままだと `node_modules/freelens-cluster-sidebar` へのリンク(`pnpm install` によるsymlink。Windows環境でDeveloper Modeが無効な場合はJunction)が作られず、有効化しても `Cannot find module ...\out\renderer\index.js` としてログに記録されるだけでこの拡張機能のみロードに失敗する(FreeLens自体は起動する)。
 
-The GitHub mirror step only runs when the CI variables `GH_APP_ID` / `GH_APP_PRIVATE_KEY` are configured on the project.
-When they are, every push to `master` and every tag is mirrored to GitHub automatically; without them, GitLab remains the sole source and the GitHub-facing jobs are skipped.
+この直接配置によるデプロイは公式ドキュメント化された正規のインストール手順ではない(公式は `.tgz` をExtensions画面からパス指定/drag&dropする方式を案内している)。`make deploy` 一発で反復ビルド・デプロイを回すための非公式なショートカットであり、この制約はその副作用。
+
+以降の更新(`out/` の中身のみ差し替え)はリンクが既に存在するため影響を受けない。
+
+(WSL2からWindows側FreeLensへデプロイする場合、`.freelens/extensions/` への書き込みがWSL↔Windowsのファイルシステム境界を越えるため、起動中でもfile watcherイベントが確実に届くかは未検証。反映されない場合はFreeLensの再起動で切り分けること)
+
+## リリース手順
+
+1. `package.json` の `version` をリリースしたい値に上げ、コミット
+2. `make tag` を実行。`package.json` のバージョンから `vX.Y.Z` タグを作成しpushする(既に同名タグがあれば拒否される)
+3. GitLab CIがタグを検知し、以下を実行
+   - Docker内で拡張機能をビルドし `.tgz` へパック(`make pack`)
+   - `.tgz` とその `.sha256` を GitLab Generic Package Registry へアップロード
+   - それらのファイルを添付した GitLab Release を作成
+   - リポジトリをGitHubへミラー
+   - `.tgz` と `.sha256` を添付した GitHub Release を作成
+
+GitHubミラー処理は、プロジェクトにCI変数 `GH_APP_ID` / `GH_APP_PRIVATE_KEY` が設定されている場合のみ実行される。
+設定済みなら `master` へのpushとタグ作成のたびに自動でGitHubへミラーされる。未設定ならGitLabのみが正とされ、GitHub関連ジョブはスキップされる。

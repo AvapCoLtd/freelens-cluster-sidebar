@@ -48,7 +48,7 @@ Reordering, grouping, and adding new clusters are out of scope, to avoid duplica
 - https://github.com/AvapCoLtd/freelens-cluster-sidebar (public)
 - https://gitlab.avaper.day/avap/freelens-plugins/freelens-cluster-sidebar (development)
 
-Development: see [CONTRIBUTING.md](CONTRIBUTING.md).
+Development: see [CONTRIBUTING.md](CONTRIBUTING.en.md).
 
 ## License
 
