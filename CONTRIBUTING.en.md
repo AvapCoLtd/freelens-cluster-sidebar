@@ -12,7 +12,7 @@ Paths that differ per contributor, such as the local FreeLens extensions directo
 # Deploy target for `make deploy` (the FreeLens extensions directory).
 # Without this, `make deploy` stops with an error.
 # Example (operating a native Windows FreeLens from WSL):
-#   /mnt/c/Users/<user>/.freelens/extensions
+#   /mnt/c/Users/<user>/AppData/Roaming/Freelens/extensions
 FREELENS_EXT_DIR=
 ```
 
@@ -31,9 +31,10 @@ make clean    # remove node_modules/out/*.tgz/.pnpm-store
 
 ### First-time setup
 
-Before using `make deploy` on a new environment, install the extension once via the [README](README.en.md#install) steps (drag the `.tgz` onto the Extensions screen in FreeLens). A `.tgz` from `make pack` works too if you just want to try unreleased changes.
-
-`make deploy` only updates an already-installed extension; running it before the extension has ever been installed may not take effect.
+FreeLens 2.0 finds `freelens-cluster-sidebar/package.json` directly under the extensions directory at startup and registers it.
+A newly found extension is registered as disabled, though.
+After the first `make deploy`, restart FreeLens and enable `freelens-cluster-sidebar` once on the Extensions screen.
+From then on, `make deploy` followed by a restart is enough.
 
 ## Release process
 

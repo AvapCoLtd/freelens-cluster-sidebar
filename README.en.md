@@ -20,8 +20,8 @@ See [docs/design.md](docs/design.md) for the full design rationale, including wh
 
 ## Compatibility
 
-Requires FreeLens 1.8.0 or later (see `engines` in package.json).
-Verified on FreeLens 1.10.3 (Extension API 1.10.3, Windows x64).
+Requires FreeLens 2.0.0 or later (see `engines` in `package.json`). It does not load on 1.x.
+For FreeLens 1.x, use release v0.1.2 or earlier.
 
 ## Install
 
