@@ -12,10 +12,11 @@ FreeLens拡張開発で参照すべき情報源へのポインタ集。
 
 | 情報源 | URL | 何がわかるか |
 |---|---|---|
-| FreeLens 公式ドキュメント | <https://freelensapp.github.io/docs/> | 拡張の全体像。`LensRendererExtension` / `LensMainExtension` クラス、`globalPages` / `clusterPages` 等の登録ポイント |
+| FreeLens 公式ドキュメント | <https://freelensapp.github.io/docs/> | 拡張の全体像と、`globalPages` / `clusterPages` 等の登録ポイント。クラスは `LensRendererExtension` / `LensMainExtension` の名前で説明されているが、v2で継承する公開名は `Renderer.LensExtension` / `Main.LensExtension` |
 | freelensapp/freelens（本体リポジトリ） | <https://github.com/freelensapp/freelens> | 実装の最終的な真実。API の挙動が不明なときはここを読む |
 | freelens 本体 Wiki: Extensions | <https://github.com/freelensapp/freelens/wiki/Extensions> | 拡張の配布・インストール周りの運用情報 |
 | freelensapp/freelens-example-extension | <https://github.com/freelensapp/freelens-example-extension> | 公式サンプル。clusterPages でのカスタムページ実装例。新規プラグインの雛形として最有力 |
+| FreeLens v2の拡張API仕様 | <https://github.com/freelensapp/freelens/blob/main/docs/extensions/api.md> | v2の公開APIが保証する挙動と失敗時の挙動。登録・ルーティング・CSSの読み込み等を節ごとに扱う |
 | FreeLens v2 移行ガイド | <https://github.com/freelensapp/freelens/blob/v2.0.0/docs/extensions/migrating-from-v1.md> | v1 拡張を v2 へ移す際の必須変更。削除・改名された API の対応表（v1→v2 rename table）もここにある |
 | npm: `@freelensapp/extensions` | <https://www.npmjs.com/package/@freelensapp/extensions> | 拡張が依存する公開 API パッケージ。v2 では `globalThis.FreelensExtensionApi` を読むだけの shim と、単一の型定義 `dist/extension-api.d.ts` からなる。型定義がそのまま API リファレンスになる |
 | npm: `@freelensapp/legacy-extensions` | <https://www.npmjs.com/package/@freelensapp/legacy-extensions> | 旧 Lens (OpenLens) 拡張 API との互換レイヤ |
@@ -64,5 +65,7 @@ v2では `node_modules/@freelensapp/extensions/dist/extension-api.d.ts` の1フ�
   全件が要るなら `namespaceStore` から全名前空間を取り `loadAll({ namespaces })` で明示する。
   cluster-scopedリソース（Node / PV等）はこの影響を受けない。
 - `clusterPages[].components.Page` に `observer()` 済みコンポーネントを渡さない。
-  ホスト側 (`extension-route-registrator`) が再度 `observer()` を適用するためmobx-react-liteがthrowし、**自拡張の登録中断に加え他拡張のサイドバー項目まで消える**（v1.8.0〜1.10.3のcore実装で確認。v2では未確認）。
+  ホスト側 (`extension-route-registrator`) が再度 `observer()` を適用するためmobx-react-liteがthrowし、**自拡張の登録中断に加え他拡張のサイドバー項目まで消える**（v1.8.0〜1.10.3のcore実装で確認）。
+  v2.0.0のホストも `observer(registration.components.Page)` を適用する（本体の `packages/core/src/renderer/routes/extension-route-registrator.injectable.tsx` で確認）。
+  v2の実機でthrowするかは未確認。
   ページ内部の子コンポーネントの `observer()` は問題ない。
