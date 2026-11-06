@@ -24,7 +24,7 @@ pack: build ## .tgz にパック
 	$(DOCKER_RUN) pnpm pack
 
 deploy: build ## $(FREELENS_EXT_DIR) へ配置(配置先 package.json のみ dev build metadata 付与)
-	@test -n "$(FREELENS_EXT_DIR)" || { echo "FREELENS_EXT_DIR is not set (set it in .env, or: make deploy FREELENS_EXT_DIR=/path/to/.freelens/extensions)"; exit 1; }
+	@test -n "$(FREELENS_EXT_DIR)" || { echo "FREELENS_EXT_DIR is not set (set it in .env, or: make deploy FREELENS_EXT_DIR=/mnt/c/Users/<user>/AppData/Roaming/Freelens/extensions)"; exit 1; }
 	mkdir -p "$(FREELENS_EXT_DIR)/freelens-cluster-sidebar"
 	@jq --indent 2 --arg dev "dev.$$(date +%s)" '.version |= . + "+" + $$dev' package.json > "$(FREELENS_EXT_DIR)/freelens-cluster-sidebar/package.json"
 	@echo "== freelens-cluster-sidebar v$$(jq -r .version "$(FREELENS_EXT_DIR)/freelens-cluster-sidebar/package.json") =="
