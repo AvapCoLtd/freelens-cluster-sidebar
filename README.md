@@ -18,11 +18,20 @@ FreeLensのHotbar（左端の縦アイコン列）はクラスタ名を2〜3文�
 FreeLens 2.0.0以上(`package.json` の `engines` を参照)。1.xでは読み込まれない。
 FreeLens 1.xではv0.1.2以前のリリースを使う。
 
+Windows版FreeLens 2.0.0で、拡張の読み込みと有効化までをログで確認した。
+画面上の機能の動作は、2.0.0ではまだ確認していない。
+
 ## インストール
 
-GitHub Releasesから最新の `.tgz` をダウンロードする。
-FreeLensのExtensions画面にドラッグ&ドロップする。
-更新時も同様に新しい `.tgz` を取得して再インストールする。
+1. [GitHub Releases](https://github.com/AvapCoLtd/freelens-cluster-sidebar/releases)から最新の `.tgz` をダウンロードする
+2. FreeLensのExtensions画面で、ダウンロードした `.tgz` のパスを指定してインストールする
+3. Extensions画面で `freelens-cluster-sidebar` が有効になっているか確認し、無効なら有効にする
+
+更新時も同様に、新しい `.tgz` を取得して再インストールする。
+インストールした拡張は、Windowsでは `%APPDATA%\Freelens\extensions\` 配下に置かれる。
+
+FreeLensを1.xから2.0へ上げた場合、1.xで入れたv0.1.2以前の拡張は2.0では読み込まれない。
+v0.1.2より新しいリリースを上の手順で入れ直す。
 
 ## 使い方
 
