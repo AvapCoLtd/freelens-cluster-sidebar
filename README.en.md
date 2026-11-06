@@ -16,18 +16,27 @@ This is a known, long-standing gap in the FreeLens/Lens community that remains u
 No existing extension or npm package was found that addresses it.
 
 `freelens-cluster-sidebar` adds a hover-expanding panel over the Hotbar that lists every cluster registered in the Catalog by its full name, with a connection-status indicator and a highlight for the active cluster.
-See [docs/design.md](docs/design.md) for the full design rationale, including what this extension deliberately does not do (reordering, grouping, adding clusters — the existing Hotbar/Catalog screens already own those).
+See [docs/design.md](docs/design.md) for the full design rationale, including what this extension deliberately does not do (reordering, grouping, adding clusters; the existing Hotbar/Catalog screens already own those).
 
 ## Compatibility
 
-Requires FreeLens 1.8.0 or later (see `engines` in package.json).
-Verified on FreeLens 1.10.3 (Extension API 1.10.3, Windows x64).
+Requires FreeLens 2.0.0 or later (see `engines` in `package.json`). It does not load on 1.x.
+For FreeLens 1.x, use release v0.1.2 or earlier.
+
+On FreeLens 2.0.0 for Windows, loading and enabling the extension has been confirmed in the logs.
+The on-screen behavior has not been verified on 2.0.0 yet.
 
 ## Install
 
 1. Download the latest `.tgz` from [GitHub Releases](https://github.com/AvapCoLtd/freelens-cluster-sidebar/releases)
-2. Drag & drop it onto the Extensions screen in FreeLens
-3. To update, repeat the same steps with the new `.tgz`
+2. On the Extensions screen in FreeLens, enter the path to the downloaded `.tgz` and install it
+3. Check that `freelens-cluster-sidebar` is enabled on the Extensions screen, and enable it if it is not
+
+To update, repeat the same steps with the new `.tgz`.
+On Windows, installed extensions are placed under `%APPDATA%\Freelens\extensions\`.
+
+If you upgrade FreeLens from 1.x to 2.0, an extension installed on 1.x (v0.1.2 or earlier) does not load on 2.0.
+Reinstall a release newer than v0.1.2 with the steps above.
 
 ## Usage
 
@@ -48,7 +57,7 @@ Reordering, grouping, and adding new clusters are out of scope, to avoid duplica
 - https://github.com/AvapCoLtd/freelens-cluster-sidebar (public)
 - https://gitlab.avaper.day/avap/freelens-plugins/freelens-cluster-sidebar (development)
 
-Development: see [CONTRIBUTING.md](CONTRIBUTING.en.md).
+Development: see [CONTRIBUTING.en.md](CONTRIBUTING.en.md).
 
 ## License
 

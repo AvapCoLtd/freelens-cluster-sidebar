@@ -5,29 +5,38 @@
 ![License](https://img.shields.io/github/license/AvapCoLtd/freelens-cluster-sidebar)
 ![Release](https://img.shields.io/github/v/release/AvapCoLtd/freelens-cluster-sidebar)
 
-Hotbar の略称表示を補完する、Catalog登録済み全クラスタのフルネーム常時表示パネル。
+Hotbarの略称表示を補完する、Catalog登録済み全クラスタのフルネーム常時表示パネル。
 
 ![Hotbarにホバーするとパネルが展開し、全クラスタがフルネームで一覧表示される](docs/images/hotbar-panel.gif)
 
-FreeLens の Hotbar（左端の縦アイコン列）はクラスタ名を2〜3文字の略称でしか表示できない。
+FreeLensのHotbar（左端の縦アイコン列）はクラスタ名を2〜3文字の略称でしか表示できない。
 クラスタを多数登録している環境では略称だけで対象クラスタを判別できず、誤操作につながる。
-詳細は [設計ドキュメント](docs/design.md) を参照。
+詳細は[設計ドキュメント](docs/design.md)を参照。
 
 ## 対応バージョン
 
-FreeLens 1.8.0 以上(package.json の `engines` を参照)。
-FreeLens 1.10.3(Extension API 1.10.3、Windows x64)で動作確認済み。
+FreeLens 2.0.0以上(`package.json` の `engines` を参照)。1.xでは読み込まれない。
+FreeLens 1.xではv0.1.2以前のリリースを使う。
+
+Windows版FreeLens 2.0.0で、拡張の読み込みと有効化までをログで確認した。
+画面上の機能の動作は、2.0.0ではまだ確認していない。
 
 ## インストール
 
-GitHub Releases から最新の `.tgz` をダウンロードする。
-FreeLens の Extensions 画面にドラッグ&ドロップする。
-更新時も同様に新しい `.tgz` を取得して再インストールする。
+1. [GitHub Releases](https://github.com/AvapCoLtd/freelens-cluster-sidebar/releases)から最新の `.tgz` をダウンロードする
+2. FreeLensのExtensions画面で、ダウンロードした `.tgz` のパスを指定してインストールする
+3. Extensions画面で `freelens-cluster-sidebar` が有効になっているか確認し、無効なら有効にする
+
+更新時も同様に、新しい `.tgz` を取得して再インストールする。
+インストールした拡張は、Windowsでは `%APPDATA%\Freelens\extensions\` 配下に置かれる。
+
+FreeLensを1.xから2.0へ上げた場合、1.xで入れたv0.1.2以前の拡張は2.0では読み込まれない。
+v0.1.2より新しいリリースを上の手順で入れ直す。
 
 ## 使い方
 
-1. Hotbar（左端の縦アイコン列）の領域そのものがホバー判定になっている（上端の TopBar と下端の Hotbar 切替メニューは除く）
-2. Hotbar にマウスホバーすると即座にパネルが展開し、Catalog に登録済みの全クラスタがフルネームで一覧表示される
+1. Hotbar（左端の縦アイコン列）の領域そのものがホバー判定になっている（上端のTopBarと下端のHotbar切替メニューは除く）
+2. Hotbarにマウスホバーすると即座にパネルが展開し、Catalogに登録済みの全クラスタがフルネームで一覧表示される
    - 各行に接続状態LED（緑=接続済 / 黄=接続中・切断中 / グレー=切断）とアクティブクラスタのハイライトが付く
 3. マウスがパネル領域から離れると即座に折りたたまれる
 4. 一覧内のクラスタ名をクリックすると、そのクラスタの概要ページへ遷移する（Hotbarクリックと同一挙動）
@@ -44,7 +53,7 @@ Hotbar / 既存Catalog画面の役割と重複させないためである。
 - https://github.com/AvapCoLtd/freelens-cluster-sidebar (公開用)
 - https://gitlab.avaper.day/avap/freelens-plugins/freelens-cluster-sidebar (開発用)
 
-開発: [CONTRIBUTING.md](CONTRIBUTING.md) を参照。
+開発: [CONTRIBUTING.md](CONTRIBUTING.md)を参照。
 
 ## License
 
